@@ -1,5 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "QDebug"
+
+
+ReaderName Reader;
 
 // Create Reader object
 ReaderName Reader;
@@ -33,7 +37,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->StatusWindow->setText("No Problem");
     ui->StatusWindow->update();
-
 }
 
 MainWindow::~MainWindow()
@@ -47,6 +50,7 @@ void MainWindow::on_ConnectButton_clicked()
     uint8_t sak=0;
     uint8_t uid=0;
     uint16_t uid_len=0;
+
     status = ISO14443_3_A_PollCard(&Reader,&atq,&sak,&uid,&uid_len); // Poll for a card using ISO14443-3 Type A
     qDebug() << "Card Connection Status : " << status;
 
@@ -207,3 +211,4 @@ void MainWindow::on_BuyButton_clicked(){
         ui->StatusWindow->update();
     }
 }
+
