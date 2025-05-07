@@ -62,7 +62,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>Last name</string>
+      <string>First Name</string>
      </property>
     </widget>
     <widget class="QTextEdit" name="NameEntered">
@@ -75,7 +75,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QTextEdit" name="LastNameEntered">
+    <widget class="QTextEdit" name="FirstNameEntered">
      <property name="geometry">
       <rect>
        <x>150</x>

@@ -26,7 +26,7 @@ public:
 private slots:
     void on_ConnectButton_clicked();
     void on_ApplicationExit_clicked();
-
+    void on_UpdateButton_clicked();
 
 private:
     Ui::MainWindow *ui;
