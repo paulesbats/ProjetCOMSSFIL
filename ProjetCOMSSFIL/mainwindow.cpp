@@ -32,8 +32,13 @@ MainWindow::MainWindow(QWidget *parent)
     RF_Power_Control(&Reader, TRUE, 0); // Turn on RF power on the reader
     qDebug() << "Reader Connection :" << status;
 
+    // Initialize status window on the HMI
     ui->StatusWindow->setText("No Problem");
     ui->StatusWindow->update();
+
+    // Initialize connection status on the HMI
+    ui->ConnectionStatus->setText("Card not connected");
+    ui->ConnectionStatus->update();
 }
 
 MainWindow::~MainWindow()
@@ -78,6 +83,8 @@ void MainWindow::on_ConnectButton_clicked()
     else{
         // Restore wallet sold with the wallet backup sold
         status = Mf_Classic_Restore_Value(&Reader,TRUE,13,14,AuthKeyA ,3);
+        // 13 is the block number to read the wallet backup | 14 is the block number to restore the wallet sold | Use key A for restore | Use key A of the sector 3
+
         if(status==MI_OK){
             qDebug() << "Restoring wallet success" << status;
         }
@@ -87,6 +94,10 @@ void MainWindow::on_ConnectButton_clicked()
         ui->WalletValue->setText(QString::number(walletBackupValue));
     }
     ui->WalletValue->update();
+
+    // Display connection status on the HMI
+    ui->ConnectionStatus->setText("Card connected !");
+    ui->ConnectionStatus->update();
 }
 
 void MainWindow::on_ApplicationExit_clicked()
@@ -127,6 +138,7 @@ void MainWindow::on_LoadButton_clicked()
 
         // Restore wallet sold with the wallet backup
         status = Mf_Classic_Restore_Value(&Reader,TRUE,13,14,AuthKeyA ,3);
+        // 13 is the block number to read the wallet backup | 14 is the block number to restore the wallet sold | Use key A for restore | Use key A of the sector 3
         if(status==MI_OK){
             qDebug() << "Restoring wallet success" << status;
         }
@@ -183,6 +195,7 @@ void MainWindow::on_BuyButton_clicked(){
 
         // Restore wallet sold with the wallet backup
         status = Mf_Classic_Restore_Value(&Reader,TRUE,13,14,AuthKeyA ,3);
+        // 13 is the block number to read the wallet backup | 14 is the block number to restore the wallet sold | Use key A for restore | Use key A of the sector 3
         if(status==MI_OK){
             qDebug() << "Restoring wallet success" << status;
         }

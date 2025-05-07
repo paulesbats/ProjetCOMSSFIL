@@ -209,17 +209,14 @@
       <string>Connection</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="DisconnectButton">
+    <widget class="QTextEdit" name="ConnectionStatus">
      <property name="geometry">
       <rect>
-       <x>280</x>
+       <x>240</x>
        <y>40</y>
-       <width>151</width>
-       <height>29</height>
+       <width>221</width>
+       <height>31</height>
       </rect>
-     </property>
-     <property name="text">
-      <string>Disconnection</string>
      </property>
     </widget>
    </widget>
@@ -276,7 +273,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
      <x>0</x>
      <y>0</y>
      <width>1200</width>
-     <height>22</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>
