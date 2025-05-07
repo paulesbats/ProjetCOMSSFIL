@@ -63,10 +63,13 @@ void MainWindow::on_ConnectButton_clicked()
     if(status!=0){
         ui->ConnectionStatus->setText("Card not connected");
         ui->ConnectionStatus->update();
+        LEDBuzzer(&Reader,LED_GREEN_ON);
     }
     else{
         ui->ConnectionStatus->setText("Card connected !");
         ui->ConnectionStatus->update();
+        LEDBuzzer(&Reader,LED_RED_ON);
+
     }
 
     // Variables declaration
@@ -251,6 +254,15 @@ void MainWindow::on_LoadButton_clicked()
         // Update status window
         ui->StatusWindow->setText("No Problem");
         ui->StatusWindow->update();
+
+        // Buzzer and LED Commands
+        uint8_t	commandYLEDBuzzON = BUZZER_ON | LED_YELLOW_ON;
+        LEDBuzzer(&Reader,commandYLEDBuzzON);
+
+        usleep(100000);
+        uint8_t	commandOFF = 0x00;
+        LEDBuzzer(&Reader,commandOFF);
+        LEDBuzzer(&Reader,LED_RED_ON);
     }
 }
 
@@ -308,6 +320,15 @@ void MainWindow::on_BuyButton_clicked(){
         // Update status window
         ui->StatusWindow->setText("No Problem");
         ui->StatusWindow->update();
+
+        // Buzzer and LED Commands
+        uint8_t	commandYLEDBuzzON = BUZZER_ON | LED_YELLOW_ON;
+        LEDBuzzer(&Reader,commandYLEDBuzzON);
+
+        usleep(100000);
+        uint8_t	commandOFF = 0x00;
+        LEDBuzzer(&Reader,commandOFF);
+        LEDBuzzer(&Reader,LED_RED_ON);
     }
 }
 
