@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QDebug>
+#include <iostream>
 
 #include "MfErrNo.h"
 #include "Sw_Device.h"
@@ -26,5 +28,12 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
+private slots:
+    void on_ConnectButton_clicked();
+    void on_ApplicationExit_clicked();
+
+    void on_BuyButton_clicked();
+    void on_LoadButton_clicked();
 };
 #endif // MAINWINDOW_H
