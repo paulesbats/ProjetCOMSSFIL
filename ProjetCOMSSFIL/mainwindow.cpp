@@ -59,6 +59,15 @@ void MainWindow::on_ConnectButton_clicked()
     status = ISO14443_3_A_PollCard(&Reader,&atq,&sak,&uid,&uid_len); // Poll for a card using ISO14443-3 Type A
     qDebug() << "Card Connection Status : " << status;
 
+    // Update connection status on the HMI
+    if(status!=0){
+        ui->ConnectionStatus->setText("Card not connected");
+        ui->ConnectionStatus->update();
+    }
+    else{
+        ui->ConnectionStatus->setText("Card connected !");
+        ui->ConnectionStatus->update();
+    }
 
     // Variables declaration
     int16_t statusName = MI_OK;
