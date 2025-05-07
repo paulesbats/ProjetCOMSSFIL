@@ -32,8 +32,11 @@ private:
 private slots:
     void on_ConnectButton_clicked();
     void on_ApplicationExit_clicked();
-
+    void on_UpdateButton_clicked();
     void on_BuyButton_clicked();
     void on_LoadButton_clicked();
+
+private:
+    Ui::MainWindow *ui;
 };
 #endif // MAINWINDOW_H
