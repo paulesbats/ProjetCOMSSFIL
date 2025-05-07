@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QDebug>
+#include <iostream>
 
 #include "MfErrNo.h"
 #include "Sw_Device.h"
@@ -23,10 +25,16 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+private:
+    Ui::MainWindow *ui;
+
 private slots:
     void on_ConnectButton_clicked();
     void on_ApplicationExit_clicked();
     void on_UpdateButton_clicked();
+    void on_BuyButton_clicked();
+    void on_LoadButton_clicked();
 
 private:
     Ui::MainWindow *ui;
