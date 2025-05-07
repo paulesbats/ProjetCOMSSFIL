@@ -2,9 +2,6 @@
 #include "ui_mainwindow.h"
 #include "QDebug"
 
-
-ReaderName Reader;
-
 // Create Reader object
 ReaderName Reader;
 
