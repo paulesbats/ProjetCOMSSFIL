@@ -13,9 +13,9 @@ A Qt-based desktop application to interact with NFC cards, allowing read, write,
 
 ---
 
-## Screenshots
+## HMI
 
-ADD SCREENSHOT OF THE HMI
+<img src="ProjetCOMSSFIL/HMI/HMI_NFC_reader.png" alt="HMI">
 
 ---
 
