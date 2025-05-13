@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "QDebug"
+#include "QGraphicsScene"
+#include "QFileDialog"
 
 // Create Reader object
 ReaderName Reader;
@@ -42,6 +44,35 @@ MainWindow::MainWindow(QWidget *parent)
     // Initialize connection status on the HMI
     ui->ConnectionStatus->setText("Card not connected");
     ui->ConnectionStatus->update();
+
+    //Style Settings
+    ui->groupBox->setStyleSheet("QGroupBox { border: 0; }");
+    ui->groupBox_2->setStyleSheet("QGroupBox { border: 0; }");
+    ui->groupBox_3->setStyleSheet("QGroupBox { border: 0; }");
+
+    qApp->setStyleSheet("QTextEdit { border-radius: 10px; border: 1px solid #aaa; padding: 5px; }");
+    qApp->setStyleSheet(R"(
+        QPushButton {
+            border: 2px solid #B8860B;
+            border-radius: 12px;
+            padding: 6px;
+            background-color: #FFD700;
+            font-weight: bold;
+        }
+        QPushButton:hover {
+            background-color: #FFF380;
+        }
+        QPushButton:pressed {
+            background-color: #E6C200;
+        }
+        QTextEdit {
+            border: 1px solid #aaa;
+            border-radius: 10px;
+            padding: 5px;
+            background-color: #ffffff;
+        }
+    )");
+
 }
 
 MainWindow::~MainWindow()

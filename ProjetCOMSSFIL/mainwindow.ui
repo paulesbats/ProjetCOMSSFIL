@@ -14,31 +14,13 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>10</y>
-      <width>231</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>18</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>Wallet manager</string>
-    </property>
-   </widget>
    <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>170</y>
+      <y>180</y>
       <width>471</width>
-      <height>341</height>
+      <height>331</height>
      </rect>
     </property>
     <property name="font">
@@ -47,63 +29,25 @@
      </font>
     </property>
     <property name="title">
-     <string>User identity</string>
+     <string/>
     </property>
-    <widget class="QLabel" name="label_2">
-     <property name="geometry">
-      <rect>
-       <x>80</x>
-       <y>80</y>
-       <width>63</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>12</pointsize>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Name</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_3">
-     <property name="geometry">
-      <rect>
-       <x>50</x>
-       <y>180</y>
-       <width>101</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>12</pointsize>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>First Name</string>
-     </property>
-    </widget>
     <widget class="QTextEdit" name="NameEntered">
      <property name="geometry">
       <rect>
-       <x>160</x>
+       <x>190</x>
        <y>60</y>
        <width>221</width>
-       <height>51</height>
+       <height>40</height>
       </rect>
      </property>
     </widget>
     <widget class="QTextEdit" name="FirstNameEntered">
      <property name="geometry">
       <rect>
-       <x>160</x>
+       <x>190</x>
        <y>170</y>
        <width>221</width>
-       <height>51</height>
+       <height>40</height>
       </rect>
      </property>
     </widget>
@@ -111,15 +55,15 @@
      <property name="geometry">
       <rect>
        <x>100</x>
-       <y>260</y>
+       <y>250</y>
        <width>261</width>
        <height>51</height>
       </rect>
      </property>
      <property name="font">
       <font>
-       <pointsize>10</pointsize>
-       <bold>false</bold>
+       <family>Century Gothic</family>
+       <pointsize>11</pointsize>
       </font>
      </property>
      <property name="text">
@@ -131,9 +75,9 @@
     <property name="geometry">
      <rect>
       <x>630</x>
-      <y>170</y>
+      <y>180</y>
       <width>511</width>
-      <height>341</height>
+      <height>331</height>
      </rect>
     </property>
     <property name="font">
@@ -142,31 +86,13 @@
      </font>
     </property>
     <property name="title">
-     <string>User wallet</string>
+     <string/>
     </property>
-    <widget class="QLabel" name="label_4">
-     <property name="geometry">
-      <rect>
-       <x>50</x>
-       <y>160</y>
-       <width>331</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>10</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Number of units to increment/decrement</string>
-     </property>
-    </widget>
     <widget class="QSpinBox" name="IncremDecremSpin">
      <property name="geometry">
       <rect>
        <x>410</x>
-       <y>160</y>
+       <y>180</y>
        <width>44</width>
        <height>29</height>
       </rect>
@@ -183,6 +109,7 @@
      </property>
      <property name="font">
       <font>
+       <family>Century Gothic</family>
        <pointsize>11</pointsize>
       </font>
      </property>
@@ -201,6 +128,7 @@
      </property>
      <property name="font">
       <font>
+       <family>Century Gothic</family>
        <pointsize>11</pointsize>
       </font>
      </property>
@@ -211,29 +139,11 @@
     <widget class="QTextEdit" name="WalletValue">
      <property name="geometry">
       <rect>
-       <x>230</x>
-       <y>80</y>
-       <width>104</width>
+       <x>400</x>
+       <y>90</y>
+       <width>81</width>
        <height>41</height>
       </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_5">
-     <property name="geometry">
-      <rect>
-       <x>100</x>
-       <y>80</y>
-       <width>101</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>12</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Wallet sold :</string>
      </property>
     </widget>
    </widget>
@@ -241,9 +151,9 @@
     <property name="geometry">
      <rect>
       <x>320</x>
-      <y>30</y>
+      <y>40</y>
       <width>491</width>
-      <height>91</height>
+      <height>81</height>
      </rect>
     </property>
     <property name="font">
@@ -252,19 +162,20 @@
      </font>
     </property>
     <property name="title">
-     <string>Card connection</string>
+     <string/>
     </property>
     <widget class="QPushButton" name="ConnectButton">
      <property name="geometry">
       <rect>
        <x>30</x>
-       <y>40</y>
+       <y>20</y>
        <width>151</width>
        <height>41</height>
       </rect>
      </property>
      <property name="font">
       <font>
+       <family>Century Gothic</family>
        <pointsize>11</pointsize>
       </font>
      </property>
@@ -275,8 +186,8 @@
     <widget class="QTextEdit" name="ConnectionStatus">
      <property name="geometry">
       <rect>
-       <x>250</x>
-       <y>40</y>
+       <x>240</x>
+       <y>20</y>
        <width>221</width>
        <height>41</height>
       </rect>
@@ -294,6 +205,7 @@
     </property>
     <property name="font">
      <font>
+      <family>Century Gothic</family>
       <pointsize>12</pointsize>
      </font>
     </property>
@@ -304,7 +216,7 @@
    <widget class="QTextEdit" name="StatusWindow">
     <property name="geometry">
      <rect>
-      <x>210</x>
+      <x>240</x>
       <y>570</y>
       <width>471</width>
       <height>41</height>
@@ -321,24 +233,51 @@ li.checked::marker { content: &quot;\2612&quot;; }
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_6">
+   <widget class="QLabel" name="label_7">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>5</y>
+      <width>1201</width>
+      <height>691</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="ressources.qrc">:/background_A.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ResetButton">
     <property name="geometry">
      <rect>
       <x>80</x>
-      <y>580</y>
-      <width>121</width>
-      <height>20</height>
+      <y>60</y>
+      <width>151</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="font">
      <font>
+      <family>Century Gothic</family>
       <pointsize>11</pointsize>
      </font>
     </property>
     <property name="text">
-     <string>Status window :</string>
+     <string>Reset Card</string>
     </property>
    </widget>
+   <zorder>label_7</zorder>
+   <zorder>groupBox</zorder>
+   <zorder>groupBox_2</zorder>
+   <zorder>groupBox_3</zorder>
+   <zorder>ApplicationExit</zorder>
+   <zorder>StatusWindow</zorder>
+   <zorder>ResetButton</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -346,12 +285,14 @@ li.checked::marker { content: &quot;\2612&quot;; }
      <x>0</x>
      <y>0</y>
      <width>1200</width>
-     <height>25</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources/>
+ <resources>
+  <include location="ressources.qrc"/>
+ </resources>
  <connections/>
 </ui>
