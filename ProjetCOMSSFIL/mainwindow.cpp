@@ -444,4 +444,62 @@ void MainWindow::on_BuyButton_clicked(){
     qDebug() << "";
 }
 
+// Reset identity and wallet in the card
+void MainWindow::on_ResetButton_clicked(){
 
+    qDebug() << "------------- Reset button clicked -------------";
+    qDebug() << "";
+
+    status = Mf_Classic_Write_Block	(&Reader,TRUE,8, (uint8_t *) "Identity",AuthKeyB ,2);
+    status += Mf_Classic_Write_Block	(&Reader,TRUE,9, (uint8_t *) "Nothing",AuthKeyB ,2);
+    status += Mf_Classic_Write_Block	(&Reader,TRUE,10, (uint8_t *) "Nothing",AuthKeyB ,2);
+    // 8-9-10 are the block number for the identity | Use key B for writing | Use key B of the sector 2
+
+    if(status==MI_OK){
+        qDebug() << "Reset identity success";
+    }
+    else{
+        qDebug() << "Reset identity fail";
+    }
+    qDebug() << "";
+
+    status = Mf_Classic_Write_Block	(&Reader,TRUE,12, (uint8_t *) "Porte Monnaie",AuthKeyB ,3);
+    status += Mf_Classic_Write_Value	(&Reader,TRUE,13, (uint32_t) 0,AuthKeyB ,3);
+    status += Mf_Classic_Write_Value	(&Reader,TRUE,14, (uint32_t) 0,AuthKeyB ,3);
+    // 12-13-14 are the block number for the wallet | Use key B for writing | Use key B of the sector 3
+
+    if(status==MI_OK){
+        qDebug() << "Reset wallet success";
+    }
+    else{
+        qDebug() << "Reset wallet fail";
+    }
+    qDebug() << "";
+
+    // Update wallet in the HMI
+    ui->WalletValue->setText(QString::number(0));
+    ui->WalletValue->update();
+
+    // Update identity in the HMI
+    ui->NameEntered->setText("Nothing");
+    ui->FirstNameEntered->setText("Nothing");
+
+    ui->NameEntered->update();
+    ui->FirstNameEntered->update();
+
+    // Buzzer and LED Commands
+    uint8_t	commandYLEDBuzzON = BUZZER_ON | LED_YELLOW_ON;
+    LEDBuzzer(&Reader,commandYLEDBuzzON);
+
+    usleep(100000);
+    uint8_t	commandOFF = 0x00;
+    LEDBuzzer(&Reader,commandOFF);
+    LEDBuzzer(&Reader,LED_RED_ON);
+
+    qDebug() << "-------- End of reset button function --------";
+    qDebug() << "";
+    qDebug() << "";
+    qDebug() << "";
+    qDebug() << "";
+
+}

@@ -35,5 +35,6 @@ private slots:
     void on_UpdateButton_clicked();
     void on_BuyButton_clicked();
     void on_LoadButton_clicked();
+    void on_ResetButton_clicked();
 };
 #endif // MAINWINDOW_H
