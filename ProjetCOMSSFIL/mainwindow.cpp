@@ -100,7 +100,47 @@ void MainWindow::on_ConnectButton_clicked()
         FirstNameString += QChar(FirstName[i]);
     }
 
-    // Update UI
+
+    // Read wallet sold
+    status = Mf_Classic_Read_Value	(&Reader,TRUE,14,&walletValue,AuthKeyA ,3);
+    // 14 is the block number for the wallet | Use key A for reading | Use key A of the sector 3
+    if(status==MI_OK){
+        qDebug() << "Reading wallet success" << status;
+    }
+    else{
+        qDebug() << "Reading wallet fail" << status;
+    }
+
+    // Read wallet backup sold
+    status = Mf_Classic_Read_Value	(&Reader,TRUE,13,&walletBackupValue,AuthKeyA ,3);
+    // 13 is the block number for the wallet backup | Use key A for reading | Use key A of the sector 3
+    if(status==MI_OK){
+        qDebug() << "Reading wallet backup success" << status;
+    }
+    else{
+        qDebug() << "Reading wallet backup fail" << status;
+    }
+
+    // Display it on the HMI if wallet sold equals wallet backup sold else restore wallet sold then display it on the HMI
+    if(walletValue==walletBackupValue){
+        ui->WalletValue->setText(QString::number(walletValue));
+    }
+    else{
+        // Restore wallet sold with the wallet backup sold
+        status = Mf_Classic_Restore_Value(&Reader,TRUE,13,14,AuthKeyA ,3);
+        // 13 is the block number to read the wallet backup | 14 is the block number to restore the wallet sold | Use key A for restore | Use key A of the sector 3
+
+        if(status==MI_OK){
+            qDebug() << "Restoring wallet success" << status;
+        }
+        else{
+            qDebug() << "Restoring wallet fail" << status;
+        }
+        ui->WalletValue->setText(QString::number(walletBackupValue));
+    }
+    ui->WalletValue->update();
+
+    // Update identity UI
     ui->NameEntered->setText(NameString);
     ui->FirstNameEntered->setText(FirstNameString);
 
@@ -145,50 +185,6 @@ void MainWindow::on_UpdateButton_clicked()
     }else{
         qDebug() << "Name and FirstName Update ERROR" ;
     }
-
-    // Read wallet sold
-    status = Mf_Classic_Read_Value	(&Reader,TRUE,14,&walletValue,AuthKeyA ,3);
-    // 14 is the block number for the wallet | Use key A for reading | Use key A of the sector 3
-    if(status==MI_OK){
-        qDebug() << "Reading wallet success" << status;
-    }
-    else{
-        qDebug() << "Reading wallet fail" << status;
-    }
-
-    // Read wallet backup sold
-    status = Mf_Classic_Read_Value	(&Reader,TRUE,13,&walletBackupValue,AuthKeyA ,3);
-    // 13 is the block number for the wallet backup | Use key A for reading | Use key A of the sector 3
-    if(status==MI_OK){
-        qDebug() << "Reading wallet backup success" << status;
-    }
-    else{
-        qDebug() << "Reading wallet backup fail" << status;
-    }
-
-    // Display it on the HMI if wallet sold equals wallet backup sold else restore wallet sold then display it on the HMI
-    if(walletValue==walletBackupValue){
-        ui->WalletValue->setText(QString::number(walletValue));
-    }
-    else{
-        // Restore wallet sold with the wallet backup sold
-        status = Mf_Classic_Restore_Value(&Reader,TRUE,13,14,AuthKeyA ,3);
-        // 13 is the block number to read the wallet backup | 14 is the block number to restore the wallet sold | Use key A for restore | Use key A of the sector 3
-
-        if(status==MI_OK){
-            qDebug() << "Restoring wallet success" << status;
-        }
-        else{
-            qDebug() << "Restoring wallet fail" << status;
-        }
-        ui->WalletValue->setText(QString::number(walletBackupValue));
-    }
-    ui->WalletValue->update();
-
-    // Display connection status on the HMI
-    ui->ConnectionStatus->setText("Card connected !");
-    ui->ConnectionStatus->update();
-
 }
 
 void MainWindow::on_ApplicationExit_clicked()

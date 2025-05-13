@@ -17,11 +17,16 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>20</x>
       <y>10</y>
-      <width>221</width>
-      <height>20</height>
+      <width>231</width>
+      <height>51</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>18</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Wallet manager</string>
@@ -36,17 +41,28 @@
       <height>341</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
     <property name="title">
      <string>User identity</string>
     </property>
     <widget class="QLabel" name="label_2">
      <property name="geometry">
       <rect>
-       <x>70</x>
-       <y>90</y>
+       <x>80</x>
+       <y>80</y>
        <width>63</width>
        <height>20</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+       <bold>false</bold>
+      </font>
      </property>
      <property name="text">
       <string>Name</string>
@@ -55,11 +71,17 @@
     <widget class="QLabel" name="label_3">
      <property name="geometry">
       <rect>
-       <x>62</x>
-       <y>190</y>
-       <width>81</width>
+       <x>50</x>
+       <y>180</y>
+       <width>101</width>
        <height>20</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+       <bold>false</bold>
+      </font>
      </property>
      <property name="text">
       <string>First Name</string>
@@ -68,8 +90,8 @@
     <widget class="QTextEdit" name="NameEntered">
      <property name="geometry">
       <rect>
-       <x>150</x>
-       <y>80</y>
+       <x>160</x>
+       <y>60</y>
        <width>221</width>
        <height>51</height>
       </rect>
@@ -78,8 +100,8 @@
     <widget class="QTextEdit" name="FirstNameEntered">
      <property name="geometry">
       <rect>
-       <x>150</x>
-       <y>180</y>
+       <x>160</x>
+       <y>170</y>
        <width>221</width>
        <height>51</height>
       </rect>
@@ -89,10 +111,16 @@
      <property name="geometry">
       <rect>
        <x>100</x>
-       <y>270</y>
+       <y>260</y>
        <width>261</width>
-       <height>41</height>
+       <height>51</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+       <bold>false</bold>
+      </font>
      </property>
      <property name="text">
       <string>Identity update</string>
@@ -102,11 +130,16 @@
    <widget class="QGroupBox" name="groupBox_2">
     <property name="geometry">
      <rect>
-      <x>580</x>
+      <x>630</x>
       <y>170</y>
-      <width>471</width>
+      <width>511</width>
       <height>341</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
     </property>
     <property name="title">
      <string>User wallet</string>
@@ -114,11 +147,16 @@
     <widget class="QLabel" name="label_4">
      <property name="geometry">
       <rect>
-       <x>30</x>
+       <x>50</x>
        <y>160</y>
-       <width>291</width>
+       <width>331</width>
        <height>31</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
      </property>
      <property name="text">
       <string>Number of units to increment/decrement</string>
@@ -127,7 +165,7 @@
     <widget class="QSpinBox" name="IncremDecremSpin">
      <property name="geometry">
       <rect>
-       <x>340</x>
+       <x>410</x>
        <y>160</y>
        <width>44</width>
        <height>29</height>
@@ -139,9 +177,14 @@
       <rect>
        <x>60</x>
        <y>240</y>
-       <width>151</width>
+       <width>171</width>
        <height>61</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+      </font>
      </property>
      <property name="text">
       <string>Buy</string>
@@ -150,11 +193,16 @@
     <widget class="QPushButton" name="LoadButton">
      <property name="geometry">
       <rect>
-       <x>260</x>
+       <x>290</x>
        <y>240</y>
-       <width>151</width>
+       <width>171</width>
        <height>61</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+      </font>
      </property>
      <property name="text">
       <string>Load</string>
@@ -163,8 +211,8 @@
     <widget class="QTextEdit" name="WalletValue">
      <property name="geometry">
       <rect>
-       <x>200</x>
-       <y>50</y>
+       <x>230</x>
+       <y>80</y>
        <width>104</width>
        <height>41</height>
       </rect>
@@ -174,10 +222,15 @@
      <property name="geometry">
       <rect>
        <x>100</x>
-       <y>50</y>
+       <y>80</y>
        <width>101</width>
        <height>31</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
      </property>
      <property name="text">
       <string>Wallet sold :</string>
@@ -190,8 +243,13 @@
       <x>320</x>
       <y>30</y>
       <width>491</width>
-      <height>80</height>
+      <height>91</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>13</pointsize>
+     </font>
     </property>
     <property name="title">
      <string>Card connection</string>
@@ -199,11 +257,16 @@
     <widget class="QPushButton" name="ConnectButton">
      <property name="geometry">
       <rect>
-       <x>50</x>
+       <x>30</x>
        <y>40</y>
        <width>151</width>
-       <height>29</height>
+       <height>41</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+      </font>
      </property>
      <property name="text">
       <string>Connection</string>
@@ -212,10 +275,10 @@
     <widget class="QTextEdit" name="ConnectionStatus">
      <property name="geometry">
       <rect>
-       <x>240</x>
+       <x>250</x>
        <y>40</y>
        <width>221</width>
-       <height>31</height>
+       <height>41</height>
       </rect>
      </property>
     </widget>
@@ -223,11 +286,16 @@
    <widget class="QPushButton" name="ApplicationExit">
     <property name="geometry">
      <rect>
-      <x>870</x>
+      <x>850</x>
       <y>560</y>
       <width>221</width>
       <height>61</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Application Exit</string>
@@ -236,7 +304,7 @@
    <widget class="QTextEdit" name="StatusWindow">
     <property name="geometry">
      <rect>
-      <x>300</x>
+      <x>210</x>
       <y>570</y>
       <width>471</width>
       <height>41</height>
@@ -256,11 +324,16 @@ li.checked::marker { content: &quot;\2612&quot;; }
    <widget class="QLabel" name="label_6">
     <property name="geometry">
      <rect>
-      <x>180</x>
+      <x>80</x>
       <y>580</y>
       <width>121</width>
       <height>20</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Status window :</string>
