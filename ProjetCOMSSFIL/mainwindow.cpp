@@ -9,7 +9,6 @@ ReaderName Reader;
 const uint8_t BlockName = 10; // Block 10 for Name (on the sector 2)
 const uint8_t BlockFirstName = 9; // Block 9 for Firstname (on the sector 2)
 
-
 // Value to be incremented/decremented in the card wallet
 uint32_t walletIncreDecremValue=0;
 
@@ -30,20 +29,37 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    qDebug() << "-------------------------------------------------------";
+    qDebug() << "------ Starting NFC reading/writing application -------";
+    qDebug() << "-------------------------------------------------------";
+    qDebug() << "---------- May the force be with the Reader -----------";
+    qDebug() << "-------------------------------------------------------";
+    qDebug() << "";
+
     Reader.Type = ReaderCDC;  // Set reader type to CDC
     Reader.device = 0;
     status = OpenCOM(&Reader);  // Open communication with the reader device
-    status = Version(&Reader);  // Retrieve the version info from the reader
+
+    if(status==MI_OK){
+        qDebug() << "Reader Connection sucess";
+    }
+    else{
+        qDebug() << "Reader Connection fail";
+
+    }
+
     RF_Power_Control(&Reader, TRUE, 0); // Turn on RF power on the reader
-    qDebug() << "Reader Connection :" << status;
+    status = Version(&Reader);  // Retrieve the version info from the reader
 
     // Initialize status window on the HMI
-    ui->StatusWindow->setText("No Problem");
+    ui->StatusWindow->setText(QString("No Problem | Reader version : %1").arg(QString::fromUtf8(Reader.version)));
     ui->StatusWindow->update();
 
     // Initialize connection status on the HMI
     ui->ConnectionStatus->setText("Card not connected");
     ui->ConnectionStatus->update();
+
 
     //Style Settings
     ui->groupBox->setStyleSheet("QGroupBox { border: 0; }");
@@ -73,6 +89,10 @@ MainWindow::MainWindow(QWidget *parent)
         }
     )");
 
+    qDebug() << "";
+    qDebug() << "";
+    qDebug() << "";
+    qDebug() << "";
 }
 
 MainWindow::~MainWindow()
@@ -80,6 +100,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+// Connection to the card
 void MainWindow::on_ConnectButton_clicked()
 {
     uint8_t atq=0;
@@ -87,21 +108,25 @@ void MainWindow::on_ConnectButton_clicked()
     uint8_t uid=0;
     uint16_t uid_len=0;
 
+    qDebug() << "------------- Connection button clicked -------------";
+    qDebug() << "";
+
     status = ISO14443_3_A_PollCard(&Reader,&atq,&sak,&uid,&uid_len); // Poll for a card using ISO14443-3 Type A
-    qDebug() << "Card Connection Status : " << status;
 
     // Update connection status on the HMI
-    if(status!=0){
-        ui->ConnectionStatus->setText("Card not connected");
-        ui->ConnectionStatus->update();
-        LEDBuzzer(&Reader,LED_GREEN_ON);
-    }
-    else{
+    if(status==MI_OK){
         ui->ConnectionStatus->setText("Card connected !");
         ui->ConnectionStatus->update();
         LEDBuzzer(&Reader,LED_RED_ON);
-
+        qDebug() << "Card Connection success";
     }
+    else{
+        ui->ConnectionStatus->setText("Card not connected");
+        ui->ConnectionStatus->update();
+        LEDBuzzer(&Reader,LED_GREEN_ON);
+        qDebug() << "Card Connection fail";
+    }
+    qDebug() << "";
 
     // Variables declaration
     int16_t statusName = MI_OK;
@@ -113,11 +138,12 @@ void MainWindow::on_ConnectButton_clicked()
     statusFirst = Mf_Classic_Read_Block(&Reader,TRUE,BlockFirstName,FirstName,AuthKeyA,2); //Read on sector 2, Block 9, with KeyA
 
     // Debug feedback
-    if (statusFirst == 0 && statusName == 0){
-        qDebug() << "Name and FirstName Read OK" ;
+    if (statusFirst == MI_OK && statusName == MI_OK){
+        qDebug() << "Name and FirstName Reading success" ;
     }else{
-        qDebug() << "Name and FirstName Read ERROR" ;
+        qDebug() << "Name and FirstName Reading fail" ;
     }
+    qDebug() << "";
 
     // Convert Int into QString
     QString NameString;
@@ -136,38 +162,46 @@ void MainWindow::on_ConnectButton_clicked()
     status = Mf_Classic_Read_Value	(&Reader,TRUE,14,&walletValue,AuthKeyA ,3);
     // 14 is the block number for the wallet | Use key A for reading | Use key A of the sector 3
     if(status==MI_OK){
-        qDebug() << "Reading wallet success" << status;
+        qDebug() << "Reading wallet success";
     }
     else{
-        qDebug() << "Reading wallet fail" << status;
+        qDebug() << "Reading wallet fail";
     }
+    qDebug() << "";
 
     // Read wallet backup sold
     status = Mf_Classic_Read_Value	(&Reader,TRUE,13,&walletBackupValue,AuthKeyA ,3);
     // 13 is the block number for the wallet backup | Use key A for reading | Use key A of the sector 3
     if(status==MI_OK){
-        qDebug() << "Reading wallet backup success" << status;
+        qDebug() << "Reading wallet backup success";
     }
     else{
-        qDebug() << "Reading wallet backup fail" << status;
+        qDebug() << "Reading wallet backup fail";
     }
+    qDebug() << "";
 
     // Display it on the HMI if wallet sold equals wallet backup sold else restore wallet sold then display it on the HMI
     if(walletValue==walletBackupValue){
         ui->WalletValue->setText(QString::number(walletValue));
+        qDebug() << "Wallet sold is equal to wallet backup sold";
+        qDebug() << "";
     }
     else{
+        qDebug() << "Wallet sold is not equal to wallet backup sold";
+        qDebug() << "";
+
         // Restore wallet sold with the wallet backup sold
         status = Mf_Classic_Restore_Value(&Reader,TRUE,13,14,AuthKeyA ,3);
         // 13 is the block number to read the wallet backup | 14 is the block number to restore the wallet sold | Use key A for restore | Use key A of the sector 3
 
         if(status==MI_OK){
-            qDebug() << "Restoring wallet success" << status;
+            qDebug() << "Restoring wallet success";
         }
         else{
-            qDebug() << "Restoring wallet fail" << status;
+            qDebug() << "Restoring wallet fail";
         }
         ui->WalletValue->setText(QString::number(walletBackupValue));
+        qDebug() << "";
     }
     ui->WalletValue->update();
 
@@ -177,10 +211,33 @@ void MainWindow::on_ConnectButton_clicked()
 
     ui->NameEntered->update();
     ui->FirstNameEntered->update();
+
+    // Buzzer and LED Commands
+    uint8_t	commandYLEDBuzzON = BUZZER_ON | LED_YELLOW_ON;
+    LEDBuzzer(&Reader,commandYLEDBuzzON);
+
+    usleep(100000);
+    uint8_t	commandOFF = 0x00;
+    LEDBuzzer(&Reader,commandOFF);
+    LEDBuzzer(&Reader,LED_RED_ON);
+
+    // Initialize connection status on the HMI
+    ui->StatusWindow->setText("");
+    ui->StatusWindow->update();
+
+    qDebug() << "-------- End of connection button function --------";
+    qDebug() << "";
+    qDebug() << "";
+    qDebug() << "";
+    qDebug() << "";
 }
 
+// Update the identity in the card
 void MainWindow::on_UpdateButton_clicked()
 {
+    qDebug() << "------------- Update button clicked -----------";
+    qDebug() << "";
+
     // Read user entry
     QString NameString = ui->NameEntered->toPlainText();
     QString FirstNameString = ui->FirstNameEntered->toPlainText();
@@ -188,6 +245,7 @@ void MainWindow::on_UpdateButton_clicked()
     // Condition for user to not exceed 16 characters
     if (NameString.length() > 16 || FirstNameString.length() > 16) {
         qDebug() << "ERROR: Name or FirstName exceeds 16 characters";
+        qDebug() << "";
         return;
     }
 
@@ -211,17 +269,43 @@ void MainWindow::on_UpdateButton_clicked()
     statusFirst = Mf_Classic_Write_Block(&Reader,TRUE,BlockFirstName,FirstName,AuthKeyB,2); //Write on sector 2, Block 9, with KeyB
 
     // Debug feedback
-    if (statusFirst == 0 && statusName == 0){
-        qDebug() << "Name and FirstName Update OK" ;
+    if (statusFirst == MI_OK && statusName == MI_OK){
+        qDebug() << "Name and FirstName Update success" ;
     }else{
-        qDebug() << "Name and FirstName Update ERROR" ;
+        qDebug() << "Name and FirstName Update fail" ;
     }
+    qDebug() << "";
+
+    // Buzzer and LED Commands
+    uint8_t	commandYLEDBuzzON = BUZZER_ON | LED_YELLOW_ON;
+    LEDBuzzer(&Reader,commandYLEDBuzzON);
+
+    usleep(100000);
+    uint8_t	commandOFF = 0x00;
+    LEDBuzzer(&Reader,commandOFF);
+    LEDBuzzer(&Reader,LED_RED_ON);
+
+    qDebug() << "-------- End of update button function --------";
+    qDebug() << "";
+    qDebug() << "";
+    qDebug() << "";
+    qDebug() << "";
 }
 
+// End of the Qt application
 void MainWindow::on_ApplicationExit_clicked()
 {
+
     RF_Power_Control(&Reader, FALSE, 0);  // Turn off RF power on the reader
     status = CloseCOM(&Reader);  // Close communication with the reader
+
+    qDebug() << "-------------------------------------------------------";
+    qDebug() << "------- Ending NFC reading/writing application --------";
+    qDebug() << "-------------------------------------------------------";
+    qDebug() << "--------- The Force will be with you. Always ----------";
+    qDebug() << "-------------------------------------------------------";
+    qDebug() << "";
+
     qApp->quit();  // Exit the Qt application
 }
 
@@ -230,18 +314,26 @@ void MainWindow::on_ApplicationExit_clicked()
 void MainWindow::on_LoadButton_clicked()
 {
 
+    qDebug() << "------------- Load button clicked -------------";
+    qDebug() << "";
+
     // Retrieve the value to be incremented in the card wallet
     walletIncreDecremValue = ui->IncremDecremSpin->value();
     qDebug() << "Number of units to increment :" << walletIncreDecremValue;
+    qDebug() << "";
 
     // Permit to avoid overflow of the wallet sold
     if( (int(walletValue)+int(walletIncreDecremValue))>maxWalletValue ){
         ui->StatusWindow->setText("Error : You cannot further increase the wallet sold");
         ui->StatusWindow->update();
+        qDebug() << "Wallet sold overflow";
+        qDebug() << "";
     }
     else if(walletIncreDecremValue == 0) {
         ui->StatusWindow->setText("Error : Please enter a non-zero value.");
         ui->StatusWindow->update();
+        qDebug() << "Nothing to increment";
+        qDebug() << "";
     }
     else{
 
@@ -249,31 +341,34 @@ void MainWindow::on_LoadButton_clicked()
         status = Mf_Classic_Increment_Value	(&Reader,TRUE,14,walletIncreDecremValue,13,AuthKeyB ,3);
         // 14 is the block number to retrieve the wallet value | 13 is the block number to write the new wallet value | Use key B for incrementing | Use key B of the sector 3
         if(status==MI_OK){
-            qDebug() << "Incrementing wallet success" << status;
+            qDebug() << "Incrementing wallet success";
         }
         else{
-            qDebug() << "Incrementing wallet fail" << status;
+            qDebug() << "Incrementing wallet fail";
         }
+        qDebug() << "";
 
         // Restore wallet sold with the wallet backup
         status = Mf_Classic_Restore_Value(&Reader,TRUE,13,14,AuthKeyA ,3);
         // 13 is the block number to read the wallet backup | 14 is the block number to restore the wallet sold | Use key A for restore | Use key A of the sector 3
         if(status==MI_OK){
-            qDebug() << "Restoring wallet success" << status;
+            qDebug() << "Restoring wallet success";
         }
         else{
-            qDebug() << "Restoring wallet fail" << status;
+            qDebug() << "Restoring wallet fail";
         }
+        qDebug() << "";
 
         // Update wallet sold on HMI
         status = Mf_Classic_Read_Value	(&Reader,TRUE,14,&walletValue,AuthKeyA ,3);
         // 14 is the block number for the wallet | Use key A for reading | Use key A of the sector 3
         if(status==MI_OK){
-            qDebug() << "Reading wallet success" << status;
+            qDebug() << "Reading wallet success";
         }
         else{
-            qDebug() << "Reading wallet fail" << status;
+            qDebug() << "Reading wallet fail";
         }
+        qDebug() << "";
 
         ui->WalletValue->setText(QString::number(walletValue));
         ui->WalletValue->update();
@@ -290,24 +385,37 @@ void MainWindow::on_LoadButton_clicked()
         uint8_t	commandOFF = 0x00;
         LEDBuzzer(&Reader,commandOFF);
         LEDBuzzer(&Reader,LED_RED_ON);
-    }
+        }
+    qDebug() << "-------- End of load button function --------";
+    qDebug() << "";
+    qDebug() << "";
+    qDebug() << "";
+    qDebug() << "";
 }
 
 // Decrement the value of the wallet
 void MainWindow::on_BuyButton_clicked(){
 
+    qDebug() << "------------- Buy button clicked -------------";
+    qDebug() << "";
+
     // Retrieve the value to be decremented in the card wallet
     walletIncreDecremValue = ui->IncremDecremSpin->value();
     qDebug() << "Number of units to Decrement :" << walletIncreDecremValue;
+    qDebug() << "";
 
     // Permit to avoid underflow of the wallet sold
     if( (int(walletValue)-int(walletIncreDecremValue))<0 ){
         ui->StatusWindow->setText("Error : You cannot further decrease the wallet sold");
         ui->StatusWindow->update();
+        qDebug() << "Wallet sold underflow";
+        qDebug() << "";
     }
     else if(walletIncreDecremValue == 0) {
         ui->StatusWindow->setText("Error : Please enter a non-zero value.");
         ui->StatusWindow->update();
+        qDebug() << "Nothing to decrement";
+        qDebug() << "";
     }
     else{
 
@@ -315,31 +423,34 @@ void MainWindow::on_BuyButton_clicked(){
         status = Mf_Classic_Decrement_Value	(&Reader,TRUE,14,walletIncreDecremValue,13,AuthKeyA ,3);
         // 14 is the block number to retrieve the wallet value | 13 is the block number to write the new wallet value | Use key B for decrementing | Use key B of the sector 3
         if(status==MI_OK){
-            qDebug() << "Decrementing wallet success" << status;
+            qDebug() << "Decrementing wallet success";
         }
         else{
-            qDebug() << "Decrementing wallet fail" << status;
+            qDebug() << "Decrementing wallet fail";
         }
+        qDebug() << "";
 
         // Restore wallet sold with the wallet backup
         status = Mf_Classic_Restore_Value(&Reader,TRUE,13,14,AuthKeyA ,3);
         // 13 is the block number to read the wallet backup | 14 is the block number to restore the wallet sold | Use key A for restore | Use key A of the sector 3
         if(status==MI_OK){
-            qDebug() << "Restoring wallet success" << status;
+            qDebug() << "Restoring wallet success";
         }
         else{
-            qDebug() << "Restoring wallet fail" << status;
+            qDebug() << "Restoring wallet fail";
         }
+        qDebug() << "";
 
         // Update wallet sold on HMI
         status = Mf_Classic_Read_Value	(&Reader,TRUE,14,&walletValue,AuthKeyA ,3);
         // 14 is the block number for the wallet | Use key A for reading | Use key A of the sector 3
         if(status==MI_OK){
-            qDebug() << "Reading wallet success" << status;
+            qDebug() << "Reading wallet success";
         }
         else{
-            qDebug() << "Reading wallet fail" << status;
+            qDebug() << "Reading wallet fail";
         }
+        qDebug() << "";
 
         ui->WalletValue->setText(QString::number(walletValue));
         ui->WalletValue->update();
@@ -357,6 +468,11 @@ void MainWindow::on_BuyButton_clicked(){
         LEDBuzzer(&Reader,commandOFF);
         LEDBuzzer(&Reader,LED_RED_ON);
     }
+    qDebug() << "-------- End of buy button function --------";
+    qDebug() << "";
+    qDebug() << "";
+    qDebug() << "";
+    qDebug() << "";
 }
 
 
