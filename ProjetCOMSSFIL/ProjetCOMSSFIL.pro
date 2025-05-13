@@ -37,3 +37,9 @@ unix|win32: LIBS += -L$$PWD/../../MonAppliQt/LIB/ -lODALID_Education
 
 INCLUDEPATH += $$PWD/../../MonAppliQt/LIB
 DEPENDPATH += $$PWD/../../MonAppliQt/LIB
+
+DISTFILES += \
+    background.png
+
+RESOURCES += \
+    ressources.qrc
